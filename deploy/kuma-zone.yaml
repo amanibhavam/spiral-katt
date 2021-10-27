@@ -4,7 +4,7 @@ metadata:
   name: katt--kuma-zone
   namespace: argocd
 spec:
-  project: kind
+  project: katt
   source:
     repoURL: 'https://github.com/amanibhavam/spiral-katt'
     path: kuma-zone

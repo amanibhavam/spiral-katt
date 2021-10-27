@@ -4,7 +4,7 @@ metadata:
   name: katt--traefik-forward-auth
   namespace: argocd
 spec:
-  project: kind
+  project: katt
   source:
     repoURL: 'https://github.com/letfn/katt-traefik-forward-auth'
     path: google
