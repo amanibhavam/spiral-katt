@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: katt--argocd
+  namespace: argocd
+spec:
+  project: kind
+  source:
+    repoURL: 'https://github.com/amanibhavam/spiral-katt'
+    path: argocd
+    targetRevision: master
+  destination:
+    name: katt
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true

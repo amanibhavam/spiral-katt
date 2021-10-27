@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: katt--kuma-zone
+  namespace: argocd
+spec:
+  project: kind
+  source:
+    repoURL: 'https://github.com/amanibhavam/spiral-katt'
+    path: kuma-zone
+    targetRevision: master
+  destination:
+    name: katt
+    namespace: kuma-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true

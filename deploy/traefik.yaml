@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: katt--traefik
+  namespace: argocd
+spec:
+  project: kind
+  source:
+    repoURL: 'https://github.com/amanibhavam/spiral-katt'
+    path: traefik
+    targetRevision: master
+  destination:
+    name: katt
+    namespace: traefik
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true

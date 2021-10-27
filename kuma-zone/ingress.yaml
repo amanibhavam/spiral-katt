@@ -1,0 +1,40 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: traefik-forward-auth
+  namespace: kuma-system
+spec:
+  forwardAuth:
+    address: http://traefik-forward-auth.traefik.svc.cluster.local:4181
+    authResponseHeaders:
+      - X-Forwarded-User
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kuma-external
+  namespace: kuma-system
+spec:
+  tls:
+    certResolver: letsencrypt
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`kuma.defn.ooo`)
+    kind: Rule
+    services:
+    - name: kuma-external
+      port: 5681
+    middlewares:
+      - name: traefik-forward-auth
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: kuma-external
+  namespace: kuma-system
+spec:
+  type: ExternalName
+  externalName: 100.101.28.35
+  ports:
+    - port: 5681
